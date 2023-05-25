@@ -1,0 +1,22 @@
+---
+- name: Start firewalld
+  service:
+    name: firewalld
+    state: started
+    enabled: true
+  tags: started firewalld
+
+- name: Insert firewalld rule for mysql
+  firewalld:
+    port: '{{ mysql_port }}/tcp'
+    permanent: true
+    immediate: true
+    state: enabled
+  tags: open port for mysql
+
+- name: Restart firewalld
+  service: 
+    name: firewalld 
+    state: reloaded 
+    enabled: true
+  tags: restarted firewalld

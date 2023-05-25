@@ -1,0 +1,6 @@
+- name: DB Service
+  hosts: dbservers
+  roles:
+    - db-service-install
+    - db-firewall
+    - db-mysql

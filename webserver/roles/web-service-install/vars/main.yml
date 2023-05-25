@@ -1,0 +1,8 @@
+---
+packages:
+  - libselinux-python
+  - libsemanage-python
+  - httpd
+  - git
+  - php
+  - php-mysql

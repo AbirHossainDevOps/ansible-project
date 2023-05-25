@@ -1,0 +1,38 @@
+---
+- name: Copy mysql configuration file
+  copy: 
+    src: files/my.cnf 
+    dest: /etc/my.cnf
+  tags: mysql conf copy
+
+- name: Start MariaDB service
+  service: 
+    name: mariadb 
+    state: started 
+    enabled: true
+  tags: started mariadb
+
+- name: Create Application Database
+  mysql_db: 
+    name: '{{ dbname }}'
+    state: present
+  tags: created database
+
+- name: Create Application DB User
+  mysql_user: 
+    name: '{{ dbuser }}'
+    password: '{{ dbpassword }}'
+    priv: '*.*:ALL'
+    host: '{{ sql_host }}' 
+    state: present
+  tags: created user
+
+- name: Move db-load-script to db host
+  copy:
+    src: files/db-load-script.sql
+    dest: /tmp/db-load-script.sql
+  tags: copy sql
+
+- name: Load Inventory Data
+  shell: mysql -f < /tmp/db-load-script.sql
+  tags: run sql

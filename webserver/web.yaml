@@ -1,0 +1,6 @@
+- name: Web Service
+  hosts: webservers
+  roles:
+    - web-service-install
+    - web-firewall
+    - web-apache

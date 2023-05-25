@@ -1,0 +1,7 @@
+---
+- name: Installation packages and services for DB server
+  yum:
+    name: '{{ item }}'
+    state: installed
+  loop: '{{ packages }}'
+  tags: installation

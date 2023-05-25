@@ -1,0 +1,7 @@
+---
+- name: Installation packages and services for Web server
+  yum:
+    name: '{{ item }}'
+    state: installed
+  loop: '{{ packages }}'
+  tags: installaton

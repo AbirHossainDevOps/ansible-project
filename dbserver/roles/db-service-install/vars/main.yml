@@ -1,0 +1,7 @@
+---
+packages:
+  - libselinux-python
+  - libsemanage-python
+  - mariadb-server
+  - MySQL-python
+  - php-mysql
