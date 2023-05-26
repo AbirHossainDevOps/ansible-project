@@ -33,6 +33,10 @@
     dest: /tmp/db-load-script.sql
   tags: copy sql
 
-- name: Load Inventory Data
-  shell: mysql -f < /tmp/db-load-script.sql
+- name: Load db data
+  mysql_db:
+    name: library
+    encoding: latin1
+    target: /tmp/db-load-script.sql
+    state: import
   tags: run sql
