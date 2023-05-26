@@ -2,7 +2,7 @@
 
 ## Library project deployment automation
 
-The project requires us to make use of jenkins and ansible to deploy an web application and implement a continuous integration and continuous deployment pipeline. So for my project I used a public repository from github-[Online Library Management System PHP](https://github.com/kumarpandule/Online-Library-Management-System-PHP.git)
+The project requires us to make use of jenkins and ansible to deploy an web application and implement a continuous integration and continuous deployment pipeline. So for my project I used a public repository from github- [Online Library Management System PHP](https://github.com/kumarpandule/Online-Library-Management-System-PHP.git)
 
 This project was forked for my projects use.
 
@@ -27,8 +27,14 @@ machines as webserver that hosts the website and dbserver that hosts the databas
 
 ## Step 2
 
-1. Configure with `nmtui` to make the machines' ip static.
+1.  Configure with `nmtui` to make the machines' ip static.
 
-2. Install package pre-requisite packages.
+2.  Install package pre-requisite packages.
 
-`yum install vim curl wget open-vm-tools -y`
+        `yum install vim curl wget open-vm-tools -y`
+
+3.  Disable selinux by opening `/etc/selinux/config` change `enforcing` to `disabled`
+
+4.  Change hostnames in `/etc/hostname`
+
+5.  Add name resolution in `/etc/hosts`
