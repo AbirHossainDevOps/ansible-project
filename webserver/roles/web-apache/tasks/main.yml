@@ -1,0 +1,38 @@
+---
+- name: document root exist
+  file:
+    path: '/var/www/{{ http_host }}'
+    state: directory
+    owner: root
+    mode: '0755'
+  tags: make root directory
+
+- name: Set index.php as the default page
+  replace:
+    path: /etc/httpd/conf/httpd.conf
+    regexp: 'DirectoryIndex index.html'
+    replace: '#DirectoryIndex index.html \nDirectoryIndex index.php'
+  tags: changed apache index from html to php file
+
+- name: Start Apache service
+  service:
+    name: httpd
+    enabled: true
+    state: started
+  tags: started apache
+
+- name: Configuration of apache server
+  template:
+    src: myconf.conf.j2
+    dest: '/etc/httpd/conf.d/{{http_host}}.conf'
+    mode: '0644'
+  notify: apache restart
+  tags: configure apache
+
+- name: Copy the code from repository
+  git:
+    repo: '{{ repository }}'
+    dest: '/var/www/{{ http_host }}/'
+    force: true
+  tags: copy repo
+

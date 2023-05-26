@@ -1,0 +1,13 @@
+<VirtualHost *:80>
+    ServerName {{ server }}
+    ServerAlias {{http_host}}
+    DocumentRoot /var/www/{{http_host}}
+    ErrorLog /var/www/{{http_host}}/error.log
+    CustomLog /var/www/{{http_host}}/requests.log combined
+
+    <Directory /var/www/{{http_host}}>
+     Options Indexes FollowSymLinks
+     AllowOverride None
+     Require all granted
+  </Directory>
+</VirtualHost>

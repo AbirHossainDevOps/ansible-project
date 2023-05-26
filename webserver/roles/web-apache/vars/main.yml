@@ -1,0 +1,4 @@
+---
+http_host: library.com
+server: 192.168.20.135
+repository: https://github.com/AbirHossainDevOps/library.git
