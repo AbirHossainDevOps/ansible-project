@@ -711,3 +711,21 @@ The project source code required some slight modifications to work for my projec
    ![r4](images/r4.png)
 
    ![r5](images/r5.png)
+
+## The website
+
+The website look as such
+
+![login](images/login.png)
+
+![signup](images/signup.png)
+
+![admin](images/admin.png)
+
+![user](images/user.png)
+
+![user2](images/user2.png)
+
+![add](images/add.png)
+
+![manage](images/manage.png)
