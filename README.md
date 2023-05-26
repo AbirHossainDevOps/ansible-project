@@ -697,4 +697,4 @@ The project source code required some slight modifications to work for my projec
 
 3. By using `Build Now` we run the pipeline
 
-   ![po](images/po.PNG)
+   ![po](images/po.png)
