@@ -14,10 +14,6 @@ The project source code required some slight modifications to work for my projec
 
 ![codeChange](images/code-change.PNG)
 
-The tree structure shows my ansible playbooks with roles implemented.
-
-![tree](images/tree.PNG)
-
 The steps taken-
 
 ## Step 1
@@ -112,4 +108,26 @@ machines as webserver that hosts the website and dbserver that hosts the databas
    systemctl enable jenkins.service
    ```
 
-6. Go to the the master machine ip in port 8090. For my case `192.168.20.246:8090` use the password found in `/var/lib/jenkins/secrets/initialAdminPassword` also make a new user. Add Ansible plugin
+6. Go to the the master machine ip in port 8090. For my case `192.168.20.246:8090` use the password found in `/var/lib/jenkins/secrets/initialAdminPassword` also make a new user. Add Ansible plugin.
+
+```
+Note: I have also setup jenkins reverse proxy for jenkins using nginx as per the documentation found in the jenkins website.
+```
+
+## Step 4
+
+### Github project code modifications
+
+The project source code required some slight modifications to work for my project. The db connection has been changed as per the following image. 2 files needed this change which are as follows, the `config.php` file in includes and admin/includes directory.
+
+![codeChange](images/code-change.PNG)
+
+## Step 5
+
+### Ansible playbook
+
+1. We will use the command `ansible-galaxy init file-name` to create roles
+
+2. The roles created sum up to the following tree.The tree structure shows my ansible playbooks with roles implemented.
+
+![tree](images/tree.PNG)
