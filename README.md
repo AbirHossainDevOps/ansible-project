@@ -515,3 +515,136 @@ The project source code required some slight modifications to work for my projec
        - web-firewall
        - web-apache
    ```
+
+   The web-service-install role is for installation
+
+   ```
+   ---
+   - name: Installation packages and services for Web server
+     yum:
+       name: '{{ item }}'
+       state: installed
+     loop: '{{ packages }}'
+     tags: installaton
+   ```
+
+   ```
+   ---
+   packages:
+   - libselinux-python
+   - libsemanage-python
+   - httpd
+   - git
+   - php
+   - php-mysql
+   ```
+
+   The web-firewall role allows exception for port 80 and 3306
+
+   ```
+   ---
+   - name: Start firewalld
+     service:
+       name: firewalld
+       state: started
+       enabled: true
+     tags: started firewalld
+
+   - name: Insert firewalld rule for apache
+     firewalld:
+       port: '{{ httpd_port }}/tcp'
+       permanent: true
+       immediate: true
+       state: enabled
+     tags: open port for apache
+
+   - name: Insert firewalld rule for mysql
+     firewalld:
+       port: '{{ mysql_port }}/tcp'
+       permanent: true
+       immediate: true
+       state: enabled
+     tags: open port for mysql
+   ```
+
+   ```
+   ---
+   httpd_port: 80
+   mysql_port: 3306
+   ```
+
+   The web-apache role configures apache and sets up the webpage
+
+   ```
+   ---
+   - name: document root exist
+     file:
+       path: '/var/www/{{ http_host }}'
+       state: directory
+       owner: root
+       mode: '0755'
+     tags: make root directory
+
+   - name: Set index.php as the default page
+     replace:
+       path: /etc/httpd/conf/httpd.conf
+       regexp: 'DirectoryIndex index.html'
+       replace: '#DirectoryIndex index.html \nDirectoryIndex index.php'
+     tags: changed apache index from html to php file
+
+   - name: Start Apache service
+     service:
+       name: httpd
+       enabled: true
+       state: started
+     tags: started apache
+
+   - name: Configuration of apache server
+     template:
+       src: myconf.conf.j2
+       dest: '/etc/httpd/conf.d/{{http_host}}.conf'
+       mode: '0644'
+     notify: apache restart
+     tags: configure apache
+
+   - name: Copy the code from repository
+     git:
+       repo: '{{ repository }}'
+       dest: '/var/www/{{ http_host }}/'
+       force: true
+     tags: copy repo
+   ```
+
+   ```
+   ---
+   # This is a handler
+   - name: apache restart
+   service:
+       name: httpd
+       state: restarted
+   tags: restarted apache
+   ```
+
+   ```
+   # This is a virtual host configuration file using jinja2
+   <VirtualHost *:80>
+       ServerName {{ server }}
+       ServerAlias {{http_host}}
+       DocumentRoot /var/www/{{http_host}}
+       ErrorLog /var/www/{{http_host}}/error.log
+       CustomLog /var/www/{{http_host}}/requests.log combined
+
+       <Directory /var/www/{{http_host}}>
+       Options Indexes FollowSymLinks
+       AllowOverride None
+       Require all granted
+   </Directory>
+   </VirtualHost>
+   ```
+
+   ```
+   ---
+   http_host: library.com
+   server: 192.168.20.135
+   repository: https://github.com/AbirHossainDevOps/library.git
+   ```
