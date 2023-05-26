@@ -38,3 +38,11 @@ machines as webserver that hosts the website and dbserver that hosts the databas
 4.  Change hostnames in `/etc/hostname`
 
 5.  Add name resolution in `/etc/hosts`
+    ```
+
+        192.168.20.246 rocky-ansible.localdomain rocky-ansible
+
+        192.168.20.135 webserver.localdomain webserver
+
+        192.168.20.124 dbserver.localdomain dbserver
+        ```
