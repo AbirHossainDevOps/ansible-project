@@ -698,3 +698,16 @@ The project source code required some slight modifications to work for my projec
 3. By using `Build Now` we run the pipeline
 
    ![po](images/po.png)
+
+   ![r1](images/r1.png)
+
+   ![r2](images/r2.png)
+
+4. Now to demonstrate the cronjob working we will make some changes in the repo. The job is scheduled in such a way that after every 2 minutes jenkins looks for chages in the remote repo and if there are chages it will rerun the pipeline again.
+   ![cc](images/cc.png)
+
+   ![r3](images/r3.png)
+
+   ![r4](images/r4.png)
+
+   ![r5](images/r5.png)
