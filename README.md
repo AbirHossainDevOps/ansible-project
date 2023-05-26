@@ -648,3 +648,53 @@ The project source code required some slight modifications to work for my projec
    server: 192.168.20.135
    repository: https://github.com/AbirHossainDevOps/library.git
    ```
+
+## Step 5
+
+### Jenkins work
+
+1. We have to create a pipeline project
+   ![jp1](images/jh.PNG)
+
+   ![jp2](images/jp2.PNG)
+
+2. Now doing the following
+
+   ![js1](images/js1.PNG)
+
+   ![js2](images/js2.PNG)
+
+   In the pipeline script I created this script using pipeline-syntax module from jenkins.
+
+   ```
+   pipeline {
+       agent any
+
+       stages {
+           stage('Git playbook ✨') {
+               steps {
+                   git branch: 'main', credentialsId: '12c630aa-5df4-4da9-b530-3b2c6404cf61', url: 'https://github.com/AbirHossainDevOps/library.git'
+               }
+
+           }
+           stage('Ansible web playbook 🎉') {
+               steps {
+                   ansiblePlaybook become: true, credentialsId: '12c630aa-5df4-4da9-b530-3b2c6404cf61', installation: 'ansible', inventory: '/etc/ansible/hosts', playbook: '/opt/ansible-project/webserver/web.yaml'
+                   echo 'DONE with the webpage👌'
+               }
+           }
+           stage('Ansible db playbook 🙏') {
+               steps {
+
+                   sh 'sudo ansible-playbook /opt/ansible-project/dbserver/db.yaml --vault-password-file /opt/pass.txt '
+                   echo 'DONE with the db 🙌'
+               }
+           }
+       }
+   }
+
+   ```
+
+3. By using `Build Now` we run the pipeline
+
+   ![po](images/po.PNG)
