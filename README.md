@@ -23,7 +23,7 @@ machines as webserver that hosts the website and dbserver that hosts the databas
 
 2.  Install package pre-requisite packages.
 
-        `yum install vim curl wget open-vm-tools -y`
+    `yum install vim curl wget open-vm-tools -y`
 
 3.  Disable selinux by opening `/etc/selinux/config` change `enforcing` to `disabled`
 
@@ -256,6 +256,15 @@ The project source code required some slight modifications to work for my projec
    dbuser: librarian
    dbpassword: librarypass
    sql_host: 192.168.20.124
+   ```
+
+   ```
+   Note: This vars file is encrypted using ansible vault. I used the command-
+   ansible-vault encrypt <file-name>
+   To decrypt the vault the command-
+   ansible-vault decrypt <file-name>
+   To edit the vault the command-
+   ansible-vault edit <file-name>
    ```
 
    ```
